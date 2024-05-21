@@ -14,7 +14,8 @@
     "test:ui": "vitest --ui",
     "lint": "eslint src --max-warnings=0",
     "typecheck": "tsc --project tsconfig.json --noEmit",
-    "generate:types": "graphql-codegen"
+    "generate:types": "graphql-codegen",
+    "gc": "node src/scripts/git-commit.mjs"
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",
@@ -46,6 +47,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-tailwindcss": "^3.15.1",
     "happy-dom": "^12.10.3",
+    "inquirer": "^9.2.22",
     "postcss": "^8.4.38",
     "prettier": "3.1.1",
     "tailwindcss": "^3.4.3",
