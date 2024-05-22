@@ -1,6 +1,6 @@
 import { ApolloClient, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import { graphqlCache } from './cache'
+import { cache } from './cache'
 
 const httpLink = createHttpLink({
   uri: 'https://api.bettermode.com'
@@ -20,7 +20,7 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: graphqlCache
+  cache
 })
 
 export default client

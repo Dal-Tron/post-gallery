@@ -2,6 +2,7 @@ import { gql } from '@apollo/client'
 
 export const GET_POSTS = gql`
   query GetPosts(
+    $after: String
     $filterBy: [PostListFilterByInput!]
     $limit: Int!
     $offset: Int
@@ -10,6 +11,7 @@ export const GET_POSTS = gql`
     $spaceIds: [ID!]
   ) {
     posts(
+      after: $after
       filterBy: $filterBy
       limit: $limit
       offset: $offset
@@ -20,6 +22,7 @@ export const GET_POSTS = gql`
       totalCount
       pageInfo {
         hasNextPage
+        endCursor
       }
       nodes {
         id

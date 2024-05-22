@@ -3,12 +3,12 @@ import GalleryItem from '../GalleryItem'
 import { Button } from '@/components/base/Button'
 
 const Gallery: React.FC = () => {
-  const { posts, fetchMore, hasNextPage } = useGetPosts()
+  const { posts, fetchMore, hasNextPage, endCursor } = useGetPosts()
 
   const loadMore = () => {
     fetchMore({
       variables: {
-        offset: posts.length || 0
+        after: endCursor
       }
     })
   }

@@ -54,5 +54,7 @@ export const useGetPosts = () => {
 
   const hasNextPage = data?.posts?.pageInfo?.hasNextPage
 
-  return { posts, loading, error, fetchMore, hasNextPage }
+  const endCursor = data?.posts?.pageInfo?.endCursor
+
+  return { posts, loading, error, fetchMore, hasNextPage, endCursor }
 }
