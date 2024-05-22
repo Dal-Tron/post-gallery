@@ -1,23 +1,14 @@
-import { Button } from '@/components/base/Button'
 import { IPost } from '@/graphql/hooks/usePosts'
-import useReaction from '@/graphql/hooks/useReaction'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import ReactionButton from '@/components/feature/ReactionButton'
 
 interface PostCardProps {
   post: IPost
 }
 
 const GalleryItem: FC<PostCardProps> = ({ post }) => {
-  const { addReaction } = useReaction()
-
   const { urls, title, description, reactionsCount, id } = post || {}
-
-  const handleAddReaction = () => {
-    if (id) addReaction(id, 'heart')
-  }
-
-  const reactionText = reactionsCount === 1 ? 'Like' : 'Likes'
 
   return (
     <div className="flex h-full flex-col rounded bg-white shadow">
@@ -32,15 +23,7 @@ const GalleryItem: FC<PostCardProps> = ({ post }) => {
         <h2 className="mb-2 text-xl font-bold">{title}</h2>
         <p className="mb-4 grow">{description}</p>
         <div className="mt-auto flex items-center justify-between">
-          <Button
-            className="space-x-1 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
-            onClick={handleAddReaction}
-          >
-            <div className="flex flex-row">
-              {reactionsCount}
-              <div className="mx-1">{reactionText}</div>
-            </div>
-          </Button>
+          <ReactionButton id={id} reactionsCount={reactionsCount} />
           <Link to={`/post/${id}`} className="text-blue-500">
             View Details
           </Link>

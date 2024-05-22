@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { GET_POST } from '@/graphql/queries/posts/getPost'
+import ReactionButton from '@/components/feature/ReactionButton'
 
 const PostDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -27,7 +28,7 @@ const PostDetails: React.FC = () => {
       <h1 className="mb-4 text-3xl font-bold">{title}</h1>
       <p className="mb-4">{description}</p>
       <p className="mb-4">{textContent}</p>
-      <p>{reactionsCount} likes</p>
+      <ReactionButton reactionsCount={reactionsCount} id={id} />
     </div>
   )
 }
