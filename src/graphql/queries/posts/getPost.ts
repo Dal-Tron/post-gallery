@@ -8,13 +8,16 @@ export const GET_POST = gql`
       description
       textContent
       reactionsCount
-      thumbnail {
-        ... on Image {
-          url
-          urls {
-            large
-            medium
-            small
+      fields {
+        key
+        value
+        relationEntities {
+          medias {
+            ... on Image {
+              urls {
+                medium
+              }
+            }
           }
         }
       }
