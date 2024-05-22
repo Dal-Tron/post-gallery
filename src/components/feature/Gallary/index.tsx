@@ -14,14 +14,25 @@ const Gallery: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
-          <GalleryItem key={post?.id} post={post} />
-        ))}
+    <>
+      <div className="flex justify-center">
+        <div className="m-8 grid max-w-[1100px] grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <GalleryItem key={post?.id} post={post} />
+          ))}
+        </div>
       </div>
-      {hasNextPage && <Button onClick={loadMore}>Show More</Button>}
-    </div>
+      <div className="mt-10 flex justify-center">
+        {hasNextPage && (
+          <Button
+            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            onClick={loadMore}
+          >
+            Show More
+          </Button>
+        )}
+      </div>
+    </>
   )
 }
 
