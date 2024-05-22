@@ -60,6 +60,7 @@ pnpm install
 Create a .env file in the root directory and add your GraphQL endpoint and access token:
 
 ```env
+NODE_ENV= dev | prod
 VITE_ACCESS_TOKEN=your-access-token
 ```
 

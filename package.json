@@ -7,7 +7,9 @@
     "name": "Dallas Hermanson"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "node server",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --outDir dist/server --ssr src/entry-server.jsx",
     "build": "tsc --project tsconfig.build.json && vite build",
     "serve": "vite preview",
     "test": "vitest",
@@ -21,6 +23,7 @@
   "dependencies": {
     "@apollo/client": "^3.10.4",
     "clsx": "^2.1.1",
+    "express": "^4.19.2",
     "graphql": "^16.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

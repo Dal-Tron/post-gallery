@@ -1,4 +1,5 @@
-import { gql } from '@apollo/client'
+import * as pkg from '@apollo/client'
+const { gql } = pkg
 
 export const GET_POST = gql`
   query GetPost($id: ID!) {

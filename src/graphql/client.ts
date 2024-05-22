@@ -1,6 +1,7 @@
-import { ApolloClient, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import { cache } from './cache'
+import { ApolloClient } from '@apollo/client/core'
+import { createHttpLink } from '@apollo/client/link/http'
 
 const httpLink = createHttpLink({
   uri: 'https://api.bettermode.com'
