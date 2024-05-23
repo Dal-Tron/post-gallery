@@ -1,8 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
-import { GET_POST } from '@/graphql/queries/posts/getPost'
 import ReactionButton from '@/components/feature/ReactionButton'
+
+import { GET_POST } from './queries/getPost'
 
 const PostDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>()

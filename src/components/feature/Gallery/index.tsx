@@ -1,6 +1,7 @@
-import { useGetPosts } from '@/graphql/hooks/usePosts'
-import GalleryItem from '../GalleryItem'
+import GalleryItem from '@/components/feature/GalleryItem'
 import { Button } from '@/components/base/Button'
+
+import { useGetPosts } from './hooks/usePosts'
 
 const Gallery: React.FC = () => {
   const { posts, fetchMore, hasNextPage, endCursor } = useGetPosts()

@@ -4,8 +4,9 @@ import {
   GetPostsQueryVariables,
   Image
 } from '@/graphql/generated/types'
-import { GET_POSTS } from '@/graphql/queries/posts/getPosts'
-import { graphQLVariables } from '@/constants/graphql'
+import { GRAPHQL_VARIABLES } from '@/constants/graphql'
+
+import { GET_POSTS } from '../queries/getPosts'
 
 export interface IPost {
   id: string
@@ -23,7 +24,7 @@ export const useGetPosts = () => {
     GetPostsQueryVariables
   >(GET_POSTS, {
     variables: {
-      ...graphQLVariables,
+      ...GRAPHQL_VARIABLES,
       after: ''
     }
   })

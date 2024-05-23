@@ -1,4 +1,4 @@
-export const graphQLVariables = {
+export const GRAPHQL_VARIABLES = {
   filterBy: [],
   limit: 3,
   orderByString: 'publishedAt',

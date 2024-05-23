@@ -6,17 +6,11 @@ export const cache = new InMemoryCache({
       fields: {
         posts: {
           keyArgs: false,
-          merge(existing = {}, incoming) {
-            const { edges: existingEdges = [] } = existing
-            const {
-              edges: incomingEdges = [],
-              pageInfo: incomingPageInfo = {}
-            } = incoming
-
+          merge(existing = { edges: [], pageInfo: {} }, incoming) {
+            const mergedEdges = [...existing.edges, ...incoming.edges]
             return {
               ...incoming,
-              edges: [...existingEdges, ...incomingEdges],
-              pageInfo: incomingPageInfo
+              edges: mergedEdges
             }
           }
         }
