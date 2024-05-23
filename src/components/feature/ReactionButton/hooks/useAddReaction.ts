@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { ADD_REACTION } from '@/components/feature/ReactionButton/mutations/addReaction'
 import {
+  ActionStatus,
   AddReactionMutation,
   AddReactionMutationVariables
 } from '@/graphql/generated/types'
@@ -13,7 +14,12 @@ const useAddReaction = () => {
 
   const addReaction = (postId: string, reaction: string) => {
     mutation({
-      variables: { input: { reaction }, postId }
+      variables: { input: { reaction }, postId },
+      optimisticResponse: {
+        addReaction: {
+          status: ActionStatus.Succeeded
+        }
+      }
     })
   }
 
