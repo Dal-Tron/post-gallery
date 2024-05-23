@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import Gallery from '@/components/feature/Gallary'
+import Gallery from '@/components/feature/Gallery'
 import PostDetails from '@/components/feature/PostDetails'
 import Layout from '@/components/feature/Layout'
 

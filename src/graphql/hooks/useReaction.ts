@@ -1,7 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { GET_POSTS } from '@/graphql/queries/posts/getPosts'
 import { ADD_REACTION } from '@/graphql/mutations/reactions/addReaction'
-import { graphQLVariables } from '@/constants/graphql'
 import {
   GetPostsQuery,
   AddReactionMutation,
@@ -25,32 +24,30 @@ const useReaction = () => {
         }
       },
       update: (cache, { data }) => {
-        const existingPosts = cache.readQuery<GetPostsQuery>({
-          query: GET_POSTS,
-          variables: {
-            ...graphQLVariables,
-            offset: 0
-          }
+        const existingPostsData = cache.readQuery<GetPostsQuery>({
+          query: GET_POSTS
         })
 
-        if (existingPosts && data) {
-          const updatedPosts = existingPosts.posts.nodes?.map((post) =>
-            post.id === postId
-              ? { ...post, reactionsCount: (post.reactionsCount || 0) + 1 }
-              : post
+        if (existingPostsData && data) {
+          const updatedPostsEdges = existingPostsData.posts?.edges?.map(
+            ({ node }) =>
+              node.id === postId
+                ? {
+                    node: {
+                      ...node,
+                      reactionsCount: (node.reactionsCount || 0) + 1
+                    }
+                  }
+                : { node }
           )
 
           cache.writeQuery<GetPostsQuery>({
             query: GET_POSTS,
-            variables: {
-              ...graphQLVariables,
-              offset: 0
-            },
             data: {
-              ...existingPosts,
+              ...existingPostsData,
               posts: {
-                ...existingPosts.posts,
-                nodes: updatedPosts
+                ...existingPostsData.posts,
+                edges: [...(updatedPostsEdges || [])]
               }
             }
           })
