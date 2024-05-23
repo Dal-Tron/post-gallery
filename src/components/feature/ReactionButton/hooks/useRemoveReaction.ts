@@ -1,10 +1,9 @@
 import { useMutation } from '@apollo/client'
 import {
-  ActionStatus,
   RemoveReactionMutation,
   RemoveReactionMutationVariables
 } from '@/graphql/generated/types'
-import { REMOVE_REACTION } from '../mutations/removeReaction'
+import { REMOVE_REACTION } from '@/graphql/mutations/reactions/removeReaction'
 
 const useRemoveReaction = () => {
   const [mutation] = useMutation<
@@ -14,12 +13,7 @@ const useRemoveReaction = () => {
 
   const removeReaction = (postId: string, reaction: string) => {
     mutation({
-      variables: { postId, reaction },
-      optimisticResponse: {
-        removeReaction: {
-          status: ActionStatus.Succeeded
-        }
-      }
+      variables: { postId, reaction }
     })
   }
 

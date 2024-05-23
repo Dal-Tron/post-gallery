@@ -5,8 +5,7 @@ import {
   Image
 } from '@/graphql/generated/types'
 import { GRAPHQL_VARIABLES } from '@/constants/graphql'
-
-import { GET_POSTS } from '../queries/getPosts'
+import { GET_POSTS } from '@/graphql/queries/posts/getPosts'
 
 export interface IPost {
   id: string
