@@ -2400,6 +2400,8 @@ export type Mutation = {
   addEmoji: Emoji
   /** @deprecated Use Glyphs instead, just update the media id with `emoji/...` */
   addEmojis: Array<Emoji>
+  /** Add the FCM token to the subscriber settings. */
+  addFcmTokenToSubscriberSettings: Action
   /** @deprecated This mutation will be replaced by createCollection */
   addGroup: Collection
   /** @deprecated This mutation will be replaced by createImages */
@@ -2563,6 +2565,8 @@ export type Mutation = {
   readNotification: Action
   readNotifications: Action
   readSpace: Action
+  /** Remove the FCM token from the subscriber settings. */
+  removeFcmTokenFromSubscriberSettings: Action
   /** @deprecated This mutation will be replaced by deleteCollection */
   removeGroup: Action
   /** @deprecated This mutation will be replaced by deleteMember */
@@ -2692,6 +2696,10 @@ export type MutationAddEmojiArgs = {
 
 export type MutationAddEmojisArgs = {
   input: Array<CreateEmojiInput>
+}
+
+export type MutationAddFcmTokenToSubscriberSettingsArgs = {
+  token: Scalars['String']['input']
 }
 
 export type MutationAddGroupArgs = {
@@ -3219,6 +3227,10 @@ export type MutationReadNotificationsArgs = {
 export type MutationReadSpaceArgs = {
   date: Scalars['DateTime']['input']
   spaceId: Scalars['String']['input']
+}
+
+export type MutationRemoveFcmTokenFromSubscriberSettingsArgs = {
+  token: Scalars['String']['input']
 }
 
 export type MutationRemoveGroupArgs = {
@@ -4044,6 +4056,7 @@ export type NewTheme = {
 
 export type Notification = {
   __typename?: 'Notification'
+  /** This field represents the member that triggered the event. However, for events such as 'post updated', 'post deleted', 'comment updated', 'comment deleted', or 'join request status updated', the actor field may be set to null. This is a privacy measure designed to prevent the exposure of potentially sensitive identities, such as moderators, who may be responsible for these actions. */
   actor?: Maybe<Payload>
   createdAt: Scalars['DateTime']['output']
   id: Scalars['ID']['output']
@@ -4491,11 +4504,7 @@ export enum PlanName {
   Plus = 'Plus',
   PlusLegacy = 'PlusLegacy',
   Premium = 'Premium',
-  PremiumLegacy = 'PremiumLegacy',
-  Basic = 'basic',
-  Enterprise = 'enterprise',
-  Plus = 'plus',
-  Premium = 'premium'
+  PremiumLegacy = 'PremiumLegacy'
 }
 
 export enum PlanRenewalType {
@@ -8337,21 +8346,23 @@ export type GetPostQuery = {
     description?: string | null
     textContent?: string | null
     reactionsCount: number
-    thumbnail?:
-      | { __typename?: 'Emoji' }
-      | { __typename?: 'File' }
-      | { __typename?: 'Glyph' }
-      | {
-          __typename?: 'Image'
-          url: string
-          urls?: {
-            __typename?: 'MediaUrls'
-            large: string
-            medium: string
-            small: string
-          } | null
-        }
-      | null
+    fields?: Array<{
+      __typename?: 'CustomField'
+      key: string
+      value?: string | null
+      relationEntities?: {
+        __typename?: 'CustomFieldRelation'
+        medias: Array<
+          | { __typename?: 'Emoji' }
+          | { __typename?: 'File' }
+          | { __typename?: 'Glyph' }
+          | {
+              __typename?: 'Image'
+              urls?: { __typename?: 'MediaUrls'; medium: string } | null
+            }
+        >
+      } | null
+    }> | null
   }
 }
 
@@ -8375,29 +8386,32 @@ export type GetPostsQuery = {
       hasNextPage: boolean
       endCursor?: string | null
     }
-    nodes?: Array<{
-      __typename?: 'Post'
-      id: string
-      title?: string | null
-      description?: string | null
-      reactionsCount: number
-      fields?: Array<{
-        __typename?: 'CustomField'
-        key: string
-        value?: string | null
-        relationEntities?: {
-          __typename?: 'CustomFieldRelation'
-          medias: Array<
-            | { __typename?: 'Emoji' }
-            | { __typename?: 'File' }
-            | { __typename?: 'Glyph' }
-            | {
-                __typename?: 'Image'
-                urls?: { __typename?: 'MediaUrls'; medium: string } | null
-              }
-          >
-        } | null
-      }> | null
+    edges?: Array<{
+      __typename?: 'PostEdge'
+      node: {
+        __typename?: 'Post'
+        id: string
+        title?: string | null
+        description?: string | null
+        reactionsCount: number
+        fields?: Array<{
+          __typename?: 'CustomField'
+          key: string
+          value?: string | null
+          relationEntities?: {
+            __typename?: 'CustomFieldRelation'
+            medias: Array<
+              | { __typename?: 'Emoji' }
+              | { __typename?: 'File' }
+              | { __typename?: 'Glyph' }
+              | {
+                  __typename?: 'Image'
+                  urls?: { __typename?: 'MediaUrls'; medium: string } | null
+                }
+            >
+          } | null
+        }> | null
+      }
     }> | null
   }
 }
@@ -8461,13 +8475,16 @@ export const GetPostDocument = gql`
       description
       textContent
       reactionsCount
-      thumbnail {
-        ... on Image {
-          url
-          urls {
-            large
-            medium
-            small
+      fields {
+        key
+        value
+        relationEntities {
+          medias {
+            ... on Image {
+              urls {
+                medium
+              }
+            }
           }
         }
       }
@@ -8555,19 +8572,21 @@ export const GetPostsDocument = gql`
         hasNextPage
         endCursor
       }
-      nodes {
-        id
-        title
-        description
-        reactionsCount
-        fields {
-          key
-          value
-          relationEntities {
-            medias {
-              ... on Image {
-                urls {
-                  medium
+      edges {
+        node {
+          id
+          title
+          description
+          reactionsCount
+          fields {
+            key
+            value
+            relationEntities {
+              medias {
+                ... on Image {
+                  urls {
+                    medium
+                  }
                 }
               }
             }

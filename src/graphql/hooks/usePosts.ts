@@ -23,12 +23,13 @@ export const useGetPosts = () => {
     GetPostsQueryVariables
   >(GET_POSTS, {
     variables: {
-      ...graphQLVariables
+      ...graphQLVariables,
+      after: ''
     }
   })
 
   const posts: IPost[] =
-    data?.posts?.nodes?.map((node) => {
+    data?.posts?.edges?.map(({ node }) => {
       let urls = {}
       if (node.fields) {
         for (const field of node.fields) {

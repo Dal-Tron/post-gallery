@@ -24,19 +24,21 @@ export const GET_POSTS = gql`
         hasNextPage
         endCursor
       }
-      nodes {
-        id
-        title
-        description
-        reactionsCount
-        fields {
-          key
-          value
-          relationEntities {
-            medias {
-              ... on Image {
-                urls {
-                  medium
+      edges {
+        node {
+          id
+          title
+          description
+          reactionsCount
+          fields {
+            key
+            value
+            relationEntities {
+              medias {
+                ... on Image {
+                  urls {
+                    medium
+                  }
                 }
               }
             }
