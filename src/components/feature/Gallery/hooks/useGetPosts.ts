@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/client'
 import {
+  CustomField,
   GetPostsQuery,
-  GetPostsQueryVariables,
-  Image
+  GetPostsQueryVariables
 } from '@/graphql/generated/types'
 import { GRAPHQL_VARIABLES } from '@/constants/graphql'
 import { GET_POSTS } from '@/graphql/queries/posts/getPosts'
+import { getImageUrls } from '../utils/getImageUrls'
 
 export interface IPost {
   id: string
@@ -30,26 +31,12 @@ export const useGetPosts = () => {
 
   const posts: IPost[] =
     data?.posts?.edges?.map(({ node }) => {
-      let urls = {}
-      if (node.fields) {
-        for (const field of node.fields) {
-          if (field.key === 'cover_image' && field.relationEntities?.medias) {
-            const image = field.relationEntities.medias.find(
-              (media) => media.__typename === 'Image'
-            ) as Image
-            if (image) {
-              urls = image.urls || {}
-            }
-          }
-        }
-      }
-
       return {
         id: node.id || '',
         title: node.title || '',
         description: node.description || '',
         reactionsCount: node.reactionsCount,
-        urls
+        urls: getImageUrls(node.fields as CustomField[])
       }
     }) || []
 

@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
 import { fireEvent, render, screen } from '@testing-library/react'
+import { vi } from 'vitest'
 
 import { Button } from '.'
 
@@ -11,7 +12,7 @@ describe('Button', () => {
   })
 
   test('calls onClick when button is enabled', () => {
-    const handleClick = jest.fn()
+    const handleClick = vi.fn()
     render(<Button onClick={handleClick}>Click me!</Button>)
     const buttonElement = screen.getByText('Click me!')
     fireEvent.click(buttonElement)
@@ -19,7 +20,7 @@ describe('Button', () => {
   })
 
   test('does not call onClick when button is disabled', () => {
-    const handleClick = jest.fn()
+    const handleClick = vi.fn()
     render(
       <Button disabled onClick={handleClick}>
         Click me!

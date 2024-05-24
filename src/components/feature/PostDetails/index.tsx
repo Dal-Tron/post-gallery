@@ -1,27 +1,23 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@apollo/client'
 import ReactionButton from '@/components/feature/ReactionButton'
 
-import { GET_POST } from './queries/getPost'
+import { useGetPost } from './hooks/useGetPost'
 
 const PostDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const { data, loading, error } = useQuery(GET_POST, {
-    variables: { id }
-  })
+  const { post, loading, error } = useGetPost(id!)
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error.message}</p>
 
-  const { title, description, textContent, reactionsCount, thumbnail } =
-    data.post
+  const { title, description, textContent, reactionsCount, urls } = post
 
   return (
-    <div className="container mx-auto p-4">
-      {thumbnail && thumbnail.urls && (
+    <div className="mx-auto max-w-[900px] p-4">
+      {urls && (
         <img
-          src={thumbnail.urls.large}
+          src={urls.medium}
           alt={title}
           className="mb-4 h-96 w-full rounded object-cover"
         />

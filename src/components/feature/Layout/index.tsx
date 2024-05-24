@@ -1,7 +1,7 @@
-import React from 'react'
+import { FC } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
-const Layout: React.FC = () => {
+const Layout: FC = () => {
   return (
     <div className="flex h-full flex-col">
       <header className="bg-gray-800 p-4 text-white">

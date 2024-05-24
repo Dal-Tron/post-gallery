@@ -1,4 +1,4 @@
-import { IPost } from '@/components/feature/Gallery/hooks/usePosts'
+import { IPost } from '@/components/feature/Gallery/hooks/useGetPosts'
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 import ReactionButton from '@/components/feature/ReactionButton'

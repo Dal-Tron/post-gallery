@@ -8,8 +8,18 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   test: {
     globals: true,
-    environment: 'happy-dom',
-    setupFiles: '.vitest/setup',
-    include: ['**/*.test.{ts,tsx}']
+    environment: 'jsdom',
+    setupFiles: './src/tests/setup.js',
+    include: ['**/*.test.{ts,tsx}'],
+    coverage: {
+      exclude: [
+        'postcss.config.mjs',
+        'tailwind.config.mjs',
+        'src/constants/**',
+        'src/graphql/**',
+        'src/icons/**',
+        'src/scripts/**'
+      ]
+    }
   }
 })

@@ -25,7 +25,7 @@ const ReactionButton = ({
       className="space-x-1 rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
       onClick={handleReaction}
     >
-      <div className="flex flex-row">
+      <div className="flex flex-row" data-testid="reaction-button">
         {reactionsCount}
         <div className="mx-1">{reactionText}</div>
       </div>

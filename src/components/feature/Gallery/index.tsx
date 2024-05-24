@@ -1,9 +1,10 @@
 import GalleryItem from '@/components/feature/GalleryItem'
 import { Button } from '@/components/base/Button'
 
-import { useGetPosts } from './hooks/usePosts'
+import { useGetPosts } from './hooks/useGetPosts'
+import { FC } from 'react'
 
-const Gallery: React.FC = () => {
+const Gallery: FC = () => {
   const { posts, fetchMore, hasNextPage, endCursor } = useGetPosts()
 
   const loadMore = () => {
