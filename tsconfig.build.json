@@ -1,0 +1,5 @@
+{
+    "extends": "./tsconfig.json",
+    "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.spec.ts", "src/**/*.spec.tsx", "src/**/*.mock.ts", "src/**/*.mock.tsx", "src/graphql/generated", "node_modules", "dist"]
+  }
+  
