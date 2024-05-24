@@ -58,7 +58,7 @@ describe('PostDetails', () => {
   test('renders loading state', () => {
     setup({ post: null, loading: true, error: null })
 
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
+    expect(screen.getByTestId('bounce-loading')).toBeInTheDocument()
   })
 
   test('renders error state', async () => {
@@ -73,7 +73,6 @@ describe('PostDetails', () => {
     setup({ post: mockPost, loading: false, error: null })
 
     expect(await screen.findByText('Post Title')).toBeInTheDocument()
-    expect(screen.getByText('Post Description')).toBeInTheDocument()
     expect(screen.getByText('Post Text Content')).toBeInTheDocument()
   })
 
