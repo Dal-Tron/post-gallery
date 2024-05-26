@@ -24,8 +24,7 @@ export const useGetPosts = () => {
     GetPostsQueryVariables
   >(GET_POSTS, {
     variables: {
-      ...GRAPHQL_VARIABLES,
-      after: ''
+      ...GRAPHQL_VARIABLES
     }
   })
 
