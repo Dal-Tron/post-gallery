@@ -1,6 +1,7 @@
 import { Button } from '@/components/base/Button'
 import { REACTIONS } from '@/constants/reactions'
 import useAddReaction from './hooks/useAddReaction'
+import useRemoveReaction from './hooks/useRemoveReaction'
 
 const ReactionButton = ({
   reactionsCount = 0,
@@ -10,11 +11,14 @@ const ReactionButton = ({
   id?: string
 }) => {
   const { addReaction } = useAddReaction()
+  const { removeReaction } = useRemoveReaction()
 
   const reactionText = reactionsCount === 1 ? 'Like' : 'Likes'
 
   const handleReaction = () => {
     if (!id) return
+
+    if (reactionsCount) return removeReaction(id, REACTIONS.HEART)
 
     addReaction(id, REACTIONS.HEART)
   }
